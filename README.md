@@ -2,9 +2,9 @@
 
 <img src="./images/logo_lifthub - Copia.jpg" align="right" width="300px">
 
-O Lift Hub é um aplicativo criado para transformar a comunicação entre o personal (professor) e seus alunos, tornando o ambiente da academia mais dinâmico, eficiente e sem distrações. Desenvolvido para ser a única plataforma necessária dentro da academia, o Lift Hub centraliza todas as interações e ferramentas essenciais em um único lugar, eliminando a necessidade de múltiplos aplicativos ou métodos de comunicação. 
+O Lift Hub é um aplicativo criado para transformar a comunicação entre o personal (professor) e seus alunos, tornando o ambiente da academia mais dinâmico, eficiente e sem distrações. Desenvolvido para ser a única plataforma necessária dentro da academia, o Lift Hub centraliza todas as interações e ferramentas essenciais em um único lugar, eliminando a necessidade de múltiplos aplicativos ou métodos de comunicação.
 
-Linguagens: JavaScript | Node.JS | PostgreSQL
+Linguagens: <img src="./images/js_5968292.png"> | <img src="./images/favicon-16x16.png"> | <img src="./images/postgre_5968342.png">
 
 Aplicação: Mobile ou responsivo
 
@@ -12,4 +12,4 @@ Aplicação: Mobile ou responsivo
 
 》 [Kanban 📋](https://trello.com/invite/b/6709a637fb0f7a31c429fc9f/ATTI77b6d9d402c94e346cb5c62130f7fc8fBF60924C/kanban-lift-hub)
 
-》 [MoSCoW 🌎](https://www.figma.com/board/bxt7wZ2Cbit54gXNgEPiwp/MoSCoW-Matrix-(Community)?node-id=8-49&t=MqmXKghYDrk5bdsN-1)
+》 [MoSCoW 🌎](<https://www.figma.com/board/bxt7wZ2Cbit54gXNgEPiwp/MoSCoW-Matrix-(Community)?node-id=8-49&t=MqmXKghYDrk5bdsN-1>)
