@@ -4,9 +4,9 @@
 
 O Lift Hub é um aplicativo criado para transformar a comunicação entre o personal (professor) e seus alunos, tornando o ambiente da academia mais dinâmico, eficiente e sem distrações. Desenvolvido para ser a única plataforma necessária dentro da academia, o Lift Hub centraliza todas as interações e ferramentas essenciais em um único lugar, eliminando a necessidade de múltiplos aplicativos ou métodos de comunicação.
 
-Linguagens: <img src="./images/js_5968292.png"> | <img src="./images/favicon-32x32.png"> | <img src="./images/postgre_5968342.png">
+Linguagens: <img src="./images/js_5968292.png" height="24px" width="24px"> | <img src="./images/favicon-32x32.png" height="24px" width="24px"> | <img src="./images/postgre_5968342.png" height="24px" width="24px">
 
-Aplicação: Mobile ou responsivo
+Aplicação: Mobile
 
 》 [Protótipo Figma 👾](https://www.figma.com/proto/qtRC0HdKQcYmJhlJZn0Otj/lift-hub?node-id=214-91&starting-point-node-id=214%3A91)
 
