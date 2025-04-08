@@ -2,7 +2,8 @@
 
 <img src="./images/logo_lifthub - Copia.jpg" align="right" width="300px">
 
-O Lift Hub é um aplicativo criado para transformar a comunicação entre o personal (professor) e seus alunos, tornando o ambiente da academia mais dinâmico, eficiente e sem distrações. Desenvolvido para ser a única plataforma necessária dentro da academia, o Lift Hub centraliza todas as interações e ferramentas essenciais em um único lugar, eliminando a necessidade de múltiplos aplicativos ou métodos de comunicação.
+O Lift Hub é um aplicativo para acompanhamento de treinos e dietas, com funcionalidades integradas para avaliação física, mental e comunicação direta entre o aluno e seu instrutor (personal trainer ou nutricionista).
+O projeto visa oferecer uma plataforma centralizada onde o aluno pode registrar sua evolução, responder anamneses, realizar avaliações semanais com fotos e receber feedback personalizado do instrutor, promovendo um acompanhamento mais eficaz e humanizado.
 
 Linguagens: <img src="./images/js_5968292.png" height="24px" width="24px"> | <img src="./images/favicon-32x32.png" height="24px" width="24px"> | <img src="./images/postgre_5968342.png" height="24px" width="24px">
 
