@@ -1,0 +1,156 @@
+@startuml Class Diagram - LiftHub
+
+skinparam classAttributeIconSize 0
+
+class User {
+  +id: SERIAL
+  +email: VARCHAR
+  #password: VARCHAR
+  +name: VARCHAR
+  +profile_picture: VARCHAR
+  +user_type: VARCHAR
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+  --
+  +create()
+  +findByEmail()
+  +findById()
+  +update()
+  +verifyPassword()
+}
+
+class Instructor {
+  +id: SERIAL
+  +user_id: INTEGER <<FK>>
+  +specialty: VARCHAR
+  +bio: TEXT
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+  --
+  +create()
+  +findByUserId()
+  +update()
+  +getStudents()
+  +linkStudent()
+}
+
+class Student {
+  +id: SERIAL
+  +user_id: INTEGER <<FK>>
+  +birth_date: DATE
+  +phone: VARCHAR
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+  --
+  +create()
+  +findByUserId()
+  +update()
+  +getInstructors()
+  +getAnamnesis()
+  +getWeeklyResponses()
+  +createWeeklyResponse()
+}
+
+class InstructorStudent {
+  +id: SERIAL
+  +instructor_id: INTEGER <<FK>>
+  +student_id: INTEGER <<FK>>
+  +status: VARCHAR
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+}
+
+class Anamnesis {
+  +id: SERIAL
+  +student_id: INTEGER <<FK>>
+  +age: INTEGER
+  +weight: DECIMAL
+  +height: DECIMAL
+  +medical_history: TEXT
+  +objectives: TEXT
+  ...
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+  --
+  +create()
+  +findByStudentId()
+  +update()
+}
+
+class WeeklyResponse {
+  +id: SERIAL
+  +student_id: INTEGER <<FK>>
+  +week_number: INTEGER
+  +response_text: TEXT
+  +feeling: VARCHAR
+  ...
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+  --
+  +createWeeklyResponse()
+  +addProgressImage()
+}
+
+class ProgressImage {
+  +id: SERIAL
+  +weekly_response_id: INTEGER <<FK>>
+  +image_path: VARCHAR
+  +created_at: TIMESTAMP
+}
+
+class Conversation {
+  +id: SERIAL
+  +instructor_id: INTEGER <<FK>>
+  +student_id: INTEGER <<FK>>
+  +created_at: TIMESTAMP
+  +updated_at: TIMESTAMP
+  --
+  +createConversation()
+  +findConversation()
+  +getMessages()
+}
+
+class Message {
+  +id: SERIAL
+  +conversation_id: INTEGER <<FK>>
+  +sender_id: INTEGER <<FK>>
+  +message_text: TEXT
+  +is_read: BOOLEAN
+  +created_at: TIMESTAMP
+  --
+  +sendMessage()
+  +markMessagesAsRead()
+}
+
+class Notification {
+  +id: SERIAL
+  +user_id: INTEGER <<FK>>
+  +title: VARCHAR
+  +message: TEXT
+  +is_read: BOOLEAN
+  +notification_type: VARCHAR
+  +created_at: TIMESTAMP
+}
+
+' Relationships
+User "1" -- "1" Instructor : has profile >
+User "1" -- "1" Student : has profile >
+
+Instructor "1" -- "0..*" InstructorStudent : manages >
+Student "1" -- "0..*" InstructorStudent : is managed by >
+InstructorStudent "*" -- "1" Instructor
+InstructorStudent "*" -- "1" Student
+
+Student "1" -- "0..1" Anamnesis : has >
+Student "1" -- "0..*" WeeklyResponse : submits >
+WeeklyResponse "1" -- "0..*" ProgressImage : contains >
+
+Instructor "1" -- "0..*" Conversation : participates in >
+Student "1" -- "0..*" Conversation : participates in >
+Conversation "1" -- "0..*" Message : contains >
+Message "*" -- "1" User : sent by >
+
+User "1" -- "0..*" Notification : receives >
+
+@enduml
+
