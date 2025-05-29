@@ -1,0 +1,150 @@
+@startuml MER Diagram - LiftHub
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define View(name,desc) class name as "desc" << (V,#AAAAFF) >>
+!define Column(name,desc) name as "desc"
+!define PrimaryKey(name,desc) <b>name</b> as "desc" <<PK>>
+!define ForeignKey(name,desc) <i>name</i> as "desc" <<FK>>
+
+skinparam classAttributeIconSize 0
+
+entity "users" {
+  + PrimaryKey(id, SERIAL)
+  --
+  Column(email, VARCHAR UNIQUE)
+  Column(password, VARCHAR)
+  Column(name, VARCHAR)
+  Column(profile_picture, VARCHAR)
+  Column(user_type, VARCHAR)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+}
+
+entity "instructors" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(user_id, INTEGER)
+  Column(specialty, VARCHAR)
+  Column(bio, TEXT)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+}
+
+entity "students" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(user_id, INTEGER)
+  Column(birth_date, DATE)
+  Column(phone, VARCHAR)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+}
+
+entity "instructor_student" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(instructor_id, INTEGER)
+  ForeignKey(student_id, INTEGER)
+  Column(status, VARCHAR)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+  --
+  UNIQUE(instructor_id, student_id)
+}
+
+entity "anamnesis" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(student_id, INTEGER)
+  Column(age, INTEGER)
+  Column(weight, DECIMAL)
+  Column(height, DECIMAL)
+  Column(medical_history, TEXT)
+  Column(physical_limitations, TEXT)
+  Column(allergies, TEXT)
+  Column(medications, TEXT)
+  Column(objectives, TEXT)
+  Column(lifestyle_description, TEXT)
+  Column(sleep_pattern, TEXT)
+  Column(stress_level, VARCHAR)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+  --
+  UNIQUE(student_id)
+}
+
+entity "weekly_responses" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(student_id, INTEGER)
+  Column(week_number, INTEGER)
+  Column(response_text, TEXT)
+  Column(feeling, VARCHAR)
+  Column(difficulties, TEXT)
+  Column(nutrition_notes, TEXT)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+}
+
+entity "progress_images" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(weekly_response_id, INTEGER)
+  Column(image_path, VARCHAR)
+  Column(created_at, TIMESTAMP)
+}
+
+entity "conversations" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(instructor_id, INTEGER)
+  ForeignKey(student_id, INTEGER)
+  Column(created_at, TIMESTAMP)
+  Column(updated_at, TIMESTAMP)
+  --
+  UNIQUE(instructor_id, student_id)
+}
+
+entity "messages" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(conversation_id, INTEGER)
+  ForeignKey(sender_id, INTEGER)
+  Column(message_text, TEXT)
+  Column(is_read, BOOLEAN)
+  Column(created_at, TIMESTAMP)
+}
+
+entity "notifications" {
+  + PrimaryKey(id, SERIAL)
+  --
+  ForeignKey(user_id, INTEGER)
+  Column(title, VARCHAR)
+  Column(message, TEXT)
+  Column(is_read, BOOLEAN)
+  Column(notification_type, VARCHAR)
+  Column(related_id, INTEGER)
+  Column(created_at, TIMESTAMP)
+}
+
+' Relationships
+users ||--o{ instructors : "user_id"
+users ||--o{ students : "user_id"
+users ||--o{ messages : "sender_id"
+users ||--o{ notifications : "user_id"
+
+instructors ||--o{ instructor_student : "instructor_id"
+students ||--o{ instructor_student : "student_id"
+
+students ||--|| anamnesis : "student_id"
+students ||--o{ weekly_responses : "student_id"
+students ||--o{ conversations : "student_id"
+
+instructors ||--o{ conversations : "instructor_id"
+
+weekly_responses ||--o{ progress_images : "weekly_response_id"
+
+conversations ||--o{ messages : "conversation_id"
+
+@enduml
+
