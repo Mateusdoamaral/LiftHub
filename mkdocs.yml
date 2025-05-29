@@ -7,14 +7,27 @@ nav:
       - Análise de Atores e Casos de Uso: actors_and_use_cases.md
       - Análise de Classes Principais: principal_classes.md
       - Análise de Fluxos para Diagramas de Sequência e Atividade: flux_to_sequence_and_activity.md
-
+  - Diagramas: diagrams.md
 theme:
   name: material
   features:
     - navigation.tabs
     - navigation.indexes
     - toc.integrate
-
+plugins:
+  - search
+  - build_plantuml:
+      render: 'server' # or "local" for local rendering
+      bin_path: '/usr/local/bin/plantuml' # ignored when render: server
+      server: 'http://www.plantuml.com/plantuml' # official plantuml server
+      disable_ssl_certificate_validation: true # for self-signed and invalid certs
+      output_format: 'svg' # or "png"
+      allow_multiple_roots: false # in case your codebase contains more locations for diagrams (all ending in diagram_root)
+      diagram_root: 'docs/diagrams' # should reside under docs_dir
+      output_folder: 'out'
+      input_folder: 'src'
+      input_extensions: '' # comma separated list of extensions to parse, by default every file is parsed
+  
 markdown_extensions:
   - admonition
   - pymdownx.details
