@@ -330,6 +330,8 @@ Para dúvidas ou sugestões, entre em contato com a equipe do LiftHub.
 
 ## Links
 
+》 [Mapa de Ideação 😎](https://startunicesusc.txm-methods.com/347e49b8-a856-44b0-a194-077ad60173a6)
+
 》 [Protótipo Figma 👾](https://www.figma.com/proto/qtRC0HdKQcYmJhlJZn0Otj/lift-hub?node-id=214-91&starting-point-node-id=214%3A91)
 
 》 [Kanban 📋](https://trello.com/invite/b/6709a637fb0f7a31c429fc9f/ATTI77b6d9d402c94e346cb5c62130f7fc8fBF60924C/kanban-lift-hub)
