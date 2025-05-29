@@ -1,0 +1,35 @@
+@startuml Activity Diagram - Login
+
+start
+
+:Acessar página de Login;
+:Inserir email e senha;
+:Clicar em "Entrar";
+
+if (Credenciais enviadas para backend?) then (Sim)
+  :Backend recebe credenciais;
+  if (Usuário existe no banco?) then (Sim)
+    if (Senha corresponde?) then (Sim)
+      :Backend gera token JWT;
+      :Backend retorna token e dados do usuário;
+      :Frontend armazena token;
+      :Redirecionar para Dashboard;
+      stop
+    else (Não)
+      :Backend retorna erro (Senha inválida);
+      :Frontend exibe mensagem de erro;
+    endif
+  else (Não)
+    :Backend retorna erro (Usuário não encontrado);
+    :Frontend exibe mensagem de erro;
+  endif
+else (Não - Erro de comunicação)
+  :Frontend exibe erro de conexão;
+endif
+
+:Permanecer na página de Login;
+
+stop
+
+@enduml
+

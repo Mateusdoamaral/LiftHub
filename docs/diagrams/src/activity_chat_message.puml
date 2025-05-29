@@ -1,0 +1,31 @@
+@startuml Activity Diagram - Enviar Mensagem no Chat
+
+start
+
+:Abrir a conversa desejada na tela de Chat;
+:Digitar a mensagem no campo de texto;
+:Clicar em "Enviar";
+
+if (Mensagem enviada para backend?) then (Sim)
+  :Backend recebe dados da mensagem;
+  :Backend valida dados;
+  if (Dados válidos?) then (Sim)
+    :Backend salva mensagem no banco de dados;
+    :Backend (idealmente) notifica outro usuário via WebSocket;
+    :Backend retorna sucesso;
+    :Frontend exibe a nova mensagem na conversa;
+    stop
+  else (Não)
+    :Backend retorna erro de validação;
+    :Frontend exibe mensagem de erro;
+  endif
+else (Não - Erro de comunicação)
+  :Frontend exibe erro de conexão;
+endif
+
+:Permanecer na tela de Chat (com mensagem digitada);
+
+stop
+
+@enduml
+

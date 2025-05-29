@@ -1,0 +1,41 @@
+@startuml Sequence Diagram - Enviar Mensagem no Chat
+
+autonumber
+
+actor Usuário as User
+participant "Frontend (Chat Page)" as Frontend
+participant "Backend (ChatController)" as ChatController
+participant "Backend (ChatModel)" as ChatModel
+database "Banco de Dados" as DB
+participant "WebSocket Server" as WebSocket
+participant "Outro Usuário" as OtherUser
+
+User -> Frontend : Abre conversa no Chat
+User -> Frontend : Digita e envia mensagem
+Frontend -> ChatController : POST /api/chat/messages (conversationId, senderId, messageText)
+activate ChatController
+
+ChatController -> ChatModel : sendMessage(conversationId, senderId, messageText)
+activate ChatModel
+ChatModel -> DB : INSERT INTO messages (...)
+activate DB
+DB --> ChatModel : Retorna dados da mensagem criada
+deactivate DB
+ChatModel --> ChatController : Retorna mensagem criada
+deactivate ChatModel
+
+ChatController --> Frontend : Resposta 201 Created (Sucesso, mensagem criada)
+
+' Notificação via WebSocket (Ideal)
+ChatController -> WebSocket : send(conversationId, newMessageData)
+activate WebSocket
+WebSocket -> OtherUser : pushNotification(newMessageData)
+deactivate WebSocket
+
+deactivate ChatController
+
+Frontend -> Frontend : Atualiza interface com nova mensagem
+Frontend -> User : Exibe nova mensagem
+
+@enduml
+

@@ -1,0 +1,50 @@
+@startuml Sequence Diagram - Enviar Resposta Semanal
+
+autonumber
+
+actor Aluno
+participant "Frontend (WeeklyResponse Page)" as Frontend
+participant "Backend (StudentController)" as StudentController
+participant "Backend (StudentModel)" as StudentModel
+participant "Backend (Upload Service)" as UploadService
+database "Banco de Dados" as DB
+
+Aluno -> Frontend : Acessa página de Resposta Semanal
+Aluno -> Frontend : Preenche formulário (texto, etc.) e anexa imagens (opcional)
+Frontend -> StudentController : POST /api/student/weekly-response (formData)
+activate StudentController
+
+StudentController -> StudentModel : createWeeklyResponse(studentId, responseData)
+activate StudentModel
+StudentModel -> DB : INSERT INTO weekly_responses (...)
+activate DB
+DB --> StudentModel : Retorna dados da resposta criada (com ID)
+deactivate DB
+StudentModel --> StudentController : Retorna resposta criada
+deactivate StudentModel
+
+opt Imagens anexadas
+  loop para cada imagem
+    StudentController -> UploadService : uploadImage(imageData)
+    activate UploadService
+    UploadService -> UploadService : Salva imagem no servidor
+    UploadService --> StudentController : Retorna caminho da imagem salva
+    deactivate UploadService
+
+    StudentController -> StudentModel : addProgressImage(responseId, imagePath)
+    activate StudentModel
+    StudentModel -> DB : INSERT INTO progress_images (...)
+    activate DB
+    DB --> StudentModel : Confirmação
+    deactivate DB
+    StudentModel --> StudentController : Confirmação
+    deactivate StudentModel
+  end
+end
+
+StudentController --> Frontend : Resposta 201 Created (Sucesso)
+deactivate StudentController
+Frontend -> Aluno : Exibe mensagem de sucesso
+
+@enduml
+

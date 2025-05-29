@@ -1,0 +1,49 @@
+@startuml Sequence Diagram - Login
+
+autonumber
+
+actor Usuário
+participant "Frontend (Login Page)" as Frontend
+participant "Backend (AuthController)" as AuthController
+participant "Backend (UserModel)" as UserModel
+database "Banco de Dados" as DB
+
+Usuário -> Frontend : Acessa página de Login
+Usuário -> Frontend : Insere email e senha
+Frontend -> AuthController : POST /api/auth/login (email, senha)
+activate AuthController
+
+AuthController -> UserModel : findByEmail(email)
+activate UserModel
+UserModel -> DB : SELECT * FROM users WHERE email = ?
+activate DB
+DB --> UserModel : Retorna dados do usuário (ou null)
+deactivate DB
+UserModel --> AuthController : Retorna usuário (ou null)
+deactivate UserModel
+
+alt Usuário encontrado
+  AuthController -> UserModel : verifyPassword(senha, user.password)
+  activate UserModel
+  UserModel --> AuthController : Retorna resultado (true/false)
+  deactivate UserModel
+
+  alt Senha correta
+    AuthController -> AuthController : Gera token JWT
+    AuthController --> Frontend : Resposta 200 OK (token, userData)
+    deactivate AuthController
+    Frontend -> Frontend : Armazena token
+    Frontend -> Usuário : Redireciona para Dashboard
+  else Senha incorreta
+    AuthController --> Frontend : Resposta 401 Unauthorized (Erro)
+    deactivate AuthController
+    Frontend -> Usuário : Exibe mensagem de erro
+  end
+else Usuário não encontrado
+  AuthController --> Frontend : Resposta 404 Not Found (Erro)
+  deactivate AuthController
+  Frontend -> Usuário : Exibe mensagem de erro
+end
+
+@enduml
+

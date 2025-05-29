@@ -1,0 +1,39 @@
+@startuml Activity Diagram - Enviar Resposta Semanal
+
+start
+
+:Acessar página de Resposta Semanal;
+:Preencher campos do formulário (texto, sentimento, etc.);
+
+if (Anexar imagens de progresso?) then (Sim)
+  :Selecionar e anexar imagens;
+endif
+
+:Clicar em "Enviar Resposta";
+
+if (Dados enviados para backend?) then (Sim)
+  :Backend recebe dados (e imagens);
+  :Backend valida dados;
+  if (Dados válidos?) then (Sim)
+    :Backend salva resposta semanal no banco;
+    if (Havia imagens?) then (Sim)
+      :Backend salva imagens no servidor;
+      :Backend associa imagens à resposta no banco;
+    endif
+    :Backend retorna sucesso;
+    :Frontend exibe mensagem "Resposta enviada com sucesso!";
+    stop
+  else (Não)
+    :Backend retorna erro de validação;
+    :Frontend exibe mensagem de erro;
+  endif
+else (Não - Erro de comunicação)
+  :Frontend exibe erro de conexão;
+endif
+
+:Permanecer na página de Resposta Semanal (com dados preenchidos);
+
+stop
+
+@enduml
+
