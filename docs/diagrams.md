@@ -14,26 +14,30 @@ Esta página apresenta os diagramas principais do sistema.
 
 ![Diagrama de Entidade-Relacionamento](diagrams/out/MER%20Diagram%20-%20LiftHub.svg)
 
-## Diagrama de Atividade - Login
+## Diagramas de Atividade
+
+### Login
 
 ![Diagrama de Atividade - Login](diagrams/out/Activity%20Diagram%20-%20Login.svg)
 
-## Diagrama de Atividade - Enviar Mensagem no Chat
+### Enviar Mensagem no Chat
 
 ![Diagrama de Atividade - Enviar Mensagem no Chat](diagrams/out/Activity%20Diagram%20-%20Enviar%20Mensagem%20no%20Chat.svg)
 
-## Diagrama de Atividade - Enviar Resposta Semanal
+### Enviar Resposta Semanal
 
 ![Diagrama de Atividade - Enviar Resposta Semanal](diagrams/out/Activity%20Diagram%20-%20Enviar%20Resposta%20Semanal.svg)
 
-## Diagrama de Sequência - Login
+## Diagramas de Sequência 
+
+### Login
 
 ![Diagrama de Sequência - Login](diagrams/out/Sequence%20Diagram%20-%20Login.svg)
 
-## Diagrama de Sequência - Enviar Mensagem no Chat
+### Enviar Mensagem no Chat
 
 ![Diagrama de Sequência - Enviar Mensagem no Chat](diagrams/out/Sequence%20Diagram%20-%20Enviar%20Mensagem%20no%20Chat.svg)
 
-## Diagrama de Sequência - Enviar Resposta Semanal
+### Enviar Resposta Semanal
 
 ![Diagrama de Sequência - Enviar Resposta Semanal](diagrams/out/Sequence%20Diagram%20-%20Enviar%20Resposta%20Semanal.svg)
