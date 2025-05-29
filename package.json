@@ -1,0 +1,17 @@
+{
+  "name": "lifthub-project-root",
+  "version": "1.0.0",
+  "description": "Documentação e configuração raiz do projeto LiftHub",
+  "main": "index.js",
+  "scripts": {
+    "docs:serve": "mkdocs serve & npx open-cli http://127.0.0.1:8000",
+    "docs:build": "mkdocs build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "open-cli": "^7.0.0"
+  }
+}

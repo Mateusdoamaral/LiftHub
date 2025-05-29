@@ -1,0 +1,23 @@
+site_name: Documentação LiftHub
+site_description: Plataforma de Conexão entre Instrutores e Alunos
+
+nav:
+  - Home: index.md
+  - Documentação Técnica:
+      - Análise de Atores e Casos de Uso: actors_and_use_cases.md
+      - Análise de Classes Principais: principal_classes.md
+      - Análise de Fluxos para Diagramas de Sequência e Atividade: flux_to_sequence_and_activity.md
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - toc.integrate
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
