@@ -28,6 +28,10 @@ Esta página apresenta os diagramas principais do sistema.
 
 ![Diagrama de Atividade - Enviar Resposta Semanal](diagrams/out/Activity%20Diagram%20-%20Enviar%20Resposta%20Semanal.svg)
 
+### Vincular Novo Aluno
+
+![Diagrama de Atividade - Vincular Novo Aluno](diagrams/out/Activity%20Diagram%20-%20Vincular%20Aluno%20por%20CPF.svg)
+
 ## Diagramas de Sequência 
 
 ### Login
@@ -41,3 +45,7 @@ Esta página apresenta os diagramas principais do sistema.
 ### Enviar Resposta Semanal
 
 ![Diagrama de Sequência - Enviar Resposta Semanal](diagrams/out/Sequence%20Diagram%20-%20Enviar%20Resposta%20Semanal.svg)
+
+### Vincular Novo Aluno
+
+![Diagrama de Sequência - Vincular Novo Aluno](diagrams/out/Sequence%20Diagram%20-%20Vincular%20Aluno%20por%20CPF.svg)

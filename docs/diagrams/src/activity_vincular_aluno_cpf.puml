@@ -1,0 +1,58 @@
+@startuml Activity Diagram - Vincular Aluno por CPF
+
+start
+
+:Instrutor acessa página de Gerenciamento de Alunos;
+:Instrutor visualiza formulário para cadastrar novo aluno;
+:Instrutor insere CPF do aluno no campo;
+:Instrutor clica no botão "Cadastrar Aluno";
+
+:Frontend valida formato do CPF;
+
+if (CPF em formato válido?) then (Sim)
+  :Frontend envia CPF para Backend;
+  :Backend recebe CPF e ID do instrutor;
+  :Backend busca usuário pelo CPF;
+  
+  if (Usuário encontrado?) then (Sim)
+    :Backend verifica se usuário é um aluno;
+    
+    if (É um aluno?) then (Sim)
+      :Backend verifica se já existe vínculo;
+      
+      if (Já existe vínculo?) then (Sim)
+        :Backend retorna mensagem de aluno já vinculado;
+        :Frontend exibe mensagem "Aluno já vinculado ao instrutor";
+      else (Não)
+        :Backend cria vínculo na tabela instructor_student;
+        :Backend retorna dados do aluno e status de sucesso;
+        :Frontend atualiza lista de alunos cadastrados;
+        :Frontend exibe mensagem de sucesso;
+      endif
+    else (Não)
+      :Backend retorna erro de tipo de usuário;
+      :Frontend exibe mensagem "CPF não pertence a um aluno";
+    endif
+  else (Não)
+    :Backend retorna erro de usuário não encontrado;
+    :Frontend exibe mensagem "Usuário não encontrado";
+    
+    if (Oferecer convite?) then (Sim)
+      :Frontend exibe opção para convidar por email;
+      if (Instrutor deseja convidar?) then (Sim)
+        :Instrutor insere email;
+        :Sistema envia convite;
+      else (Não)
+        :Instrutor cancela operação;
+      endif
+    endif
+  endif
+else (Não)
+  :Frontend exibe erro de formato de CPF;
+endif
+
+:Instrutor permanece na página de Gerenciamento de Alunos;
+
+stop
+
+@enduml

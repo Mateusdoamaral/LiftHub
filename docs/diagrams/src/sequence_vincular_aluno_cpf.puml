@@ -1,0 +1,87 @@
+@startuml Sequence Diagram - Vincular Aluno por CPF
+
+autonumber
+
+actor "Instrutor" as Instructor
+participant "Frontend\n(Gerenciamento de Alunos)" as Frontend
+participant "Backend\n(InstructorController)" as Controller
+participant "Backend\n(InstructorModel)" as Model
+database "Banco de Dados" as DB
+
+Instructor -> Frontend : Acessa página de Gerenciamento de Alunos
+Instructor -> Frontend : Insere CPF do aluno
+Instructor -> Frontend : Clica em "Cadastrar Aluno"
+
+Frontend -> Frontend : Valida formato do CPF
+
+alt CPF em formato válido
+    Frontend -> Controller : POST /api/instructor/link-student (CPF, instructorId)
+    activate Controller
+    
+    Controller -> Model : findStudentByCPF(CPF)
+    activate Model
+    Model -> DB : SELECT * FROM users JOIN students WHERE CPF = ?
+    activate DB
+    DB --> Model : Retorna dados do aluno (ou null)
+    deactivate DB
+    Model --> Controller : Retorna dados do aluno (ou null)
+    deactivate Model
+    
+    alt Aluno encontrado
+        Controller -> Model : checkExistingLink(instructorId, studentId)
+        activate Model
+        Model -> DB : SELECT * FROM instructor_student WHERE instructor_id = ? AND student_id = ?
+        activate DB
+        DB --> Model : Retorna vínculo (ou null)
+        deactivate DB
+        Model --> Controller : Retorna status do vínculo
+        deactivate Model
+        
+        alt Vínculo não existe
+            Controller -> Model : linkStudent(instructorId, studentId)
+            activate Model
+            Model -> DB : INSERT INTO instructor_student (instructor_id, student_id, status)
+            activate DB
+            DB --> Model : Confirmação
+            deactivate DB
+            Model --> Controller : Confirmação
+            deactivate Model
+            
+            Controller -> Model : getStudents(instructorId)
+            activate Model
+            Model -> DB : SELECT * FROM instructor_student JOIN students JOIN users WHERE instructor_id = ?
+            activate DB
+            DB --> Model : Lista atualizada de alunos
+            deactivate DB
+            Model --> Controller : Lista atualizada de alunos
+            deactivate Model
+            
+            Controller --> Frontend : Resposta 201 Created (Sucesso, dados do aluno, lista atualizada)
+            Frontend -> Frontend : Atualiza lista de alunos cadastrados
+            Frontend -> Instructor : Exibe mensagem de sucesso
+        else Vínculo já existe
+            Controller --> Frontend : Resposta 409 Conflict (Aluno já vinculado)
+            Frontend -> Instructor : Exibe mensagem "Aluno já vinculado ao instrutor"
+        end
+    else Aluno não encontrado
+        Controller --> Frontend : Resposta 404 Not Found (Usuário não encontrado)
+        Frontend -> Instructor : Exibe mensagem "Usuário não encontrado"
+        
+        opt Oferecer convite
+            Frontend -> Instructor : Exibe opção para convidar por email
+            
+            alt Instrutor decide convidar
+                Instructor -> Frontend : Insere email e confirma
+                Frontend -> Controller : POST /api/instructor/invite-student (email)
+                Controller --> Frontend : Resposta (Convite enviado)
+                Frontend -> Instructor : Exibe confirmação de convite enviado
+            end
+        end
+    end
+    
+    deactivate Controller
+else CPF em formato inválido
+    Frontend -> Instructor : Exibe erro de formato de CPF
+end
+
+@enduml
